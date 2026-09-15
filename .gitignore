@@ -1,0 +1,17 @@
+# 程序运行产生的学生数据
+students.json
+
+# Python 自动生成的缓存
+__pycache__/
+*.pyc
+
+# Python 虚拟环境
+.venv/
+venv/
+
+# VS Code 本地设置
+.vscode/
+
+# Codex 工作目录
+work/
+outputs/

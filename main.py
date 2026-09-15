@@ -53,24 +53,61 @@ def show_students(students):
             f"成绩：{student['score']}"
         )
 
+def search_students(students):
+    """按照姓名关键词搜索学生。"""
+    keyword = input("请输入要搜索的姓名：").strip().lower()
+
+    if not keyword:
+        print("\n搜索关键词不能为空。")
+        return
+
+    # 从全部学生中选出姓名包含关键词的学生。
+    results = [
+        student
+        for student in students
+        if keyword in student["name"].lower()
+    ]
+
+    if results:
+        print(f"\n找到 {len(results)} 名学生：")
+        show_students(results)
+    else:
+        print("\n没有找到符合条件的学生。")
+
+
+def show_menu():
+    """显示主菜单。"""
+    print("\n=== 主菜单 ===")
+    print("1. 录入学生")
+    print("2. 查看全部学生")
+    print("3. 按姓名搜索")
+    print("0. 退出系统")
 
 def main():
     """程序的主入口。"""
     print("=== Python 学生信息管理系统 v1.0 ===")
-
-    # 先读取以前保存的数据，再录入一名新学生。
     students = load_students()
-    show_students(students)
 
-    print("\n--- 录入新学生 ---")
-    student = input_student()
-    students.append(student)
+    # 持续显示菜单，直到用户选择退出。
+    while True:
+        show_menu()
+        choice = input("请选择操作：").strip()
 
-    # 把包含新学生的完整列表保存到磁盘。
-    save_students(students)
-    print("\n保存成功！")
-    show_students(students)
-
+        if choice == "1":
+            print("\n--- 录入新学生 ---")
+            student = input_student()
+            students.append(student)
+            save_students(students)
+            print("\n保存成功！")
+        elif choice == "2":
+            show_students(students)
+        elif choice == "3":
+            search_students(students)
+        elif choice == "0":
+            print("\n感谢使用，再见！")
+            break
+        else:
+            print("\n输入无效，请输入 0、1、2 或 3。")
 
 if __name__ == "__main__":
     main()
